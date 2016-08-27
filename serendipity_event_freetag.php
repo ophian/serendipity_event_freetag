@@ -506,7 +506,7 @@ class serendipity_event_freetag extends serendipity_event
             return false;
         }
 
-        foreach($result as $entry) {
+        foreach($result AS $entry) {
             $tags = self::makeTagsFromTaglist($entry['value']);
             self::addTagsToEntry($entry['entryid'], $tags);
 
@@ -583,7 +583,7 @@ class serendipity_event_freetag extends serendipity_event
         $technorati_img = $this->get_config('technorati_tag_image');
         $img_url        = $this->get_config('path_img',$serendipity['serendipityHTTPPath'] . 'plugins/serendipity_event_freetag/img/');
 
-        foreach($tags as $tag) {
+        foreach($tags AS $tag) {
             $tag = trim($tag);
             if (empty($tag)) {
                 continue;
@@ -720,7 +720,7 @@ class serendipity_event_freetag extends serendipity_event
         } else {
             arsort($tags);
             $tagsWithLinks = array();
-            foreach ($tags as $tag => $count) {
+            foreach ($tags AS $tag => $count) {
                 $tagsWithLinks[$tag] = array(
                     'count' => $count,
                     'href'  => $taglink . self::makeUrlTag($tag),
@@ -1522,7 +1522,7 @@ $(document).ready(function() {
             return $memo;
         }
 
-        $q = "SELECT tag, count(tag) as total
+        $q = "SELECT tag, count(tag) AS total
                 FROM {$serendipity['dbPrefix']}entrytags
             GROUP BY tag
             ORDER BY tag";
@@ -1534,7 +1534,7 @@ $(document).ready(function() {
         }
 
         $memo = array();
-        foreach((array)$rows as $r) {
+        foreach((array)$rows AS $r) {
             $memo[$r['tag']] = $r['total'];
         }
 
@@ -1599,7 +1599,7 @@ $(document).ready(function() {
         $rows = serendipity_db_query($this->getTagCloudQuery('', $tag));
 
         if (is_array($rows)) {
-            foreach((array)$rows as $r) {
+            foreach((array)$rows AS $r) {
 
                 if ($to_lower) {
                     $r = $this->array_imap($r); // set to_lower for frontend clouds (new)
@@ -1634,7 +1634,7 @@ $(document).ready(function() {
     {
         global $serendipity;
         if ($tag === true) {
-            $q = "SELECT tag, count(tag) as total FROM {$serendipity['dbPrefix']}entrytags GROUP BY tag ORDER BY tag";
+            $q = "SELECT tag, count(tag) AS total FROM {$serendipity['dbPrefix']}entrytags GROUP BY tag ORDER BY tag";
         } else {
 
             if (is_string($tag)) {
@@ -1769,7 +1769,7 @@ $(document).ready(function() {
     {
         global $serendipity;
 
-        $q = "SELECT tag, count(tag) as total
+        $q = "SELECT tag, count(tag) AS total
                 FROM {$serendipity['dbPrefix']}entrytags
             GROUP BY tag
               HAVING count(tag) <= $leafWeight
@@ -1783,7 +1783,7 @@ $(document).ready(function() {
 
         $tags = array();
         if (is_array($rows) && !empty($rows)) {
-            foreach((array)$rows as $r) {
+            foreach((array)$rows AS $r) {
                 $tags[$r['tag']] = $r['total'];
             }
         }
@@ -1815,7 +1815,7 @@ $(document).ready(function() {
         }
 
         $gt = array();
-        foreach($result as $row) {
+        foreach($result AS $row) {
             if (isset($row['entryid'])) {
                 $gt[$row['entryid']][] = $row['tag'];
             }
@@ -1865,7 +1865,7 @@ $(document).ready(function() {
             return false;
         }
 
-        foreach($tags as $tag) {
+        foreach($tags AS $tag) {
             $q = "INSERT INTO {$serendipity['dbPrefix']}entrytags (entryid, tag) VALUES (".(int)$entryId.", '".serendipity_db_escape_string($tag)."')";
             serendipity_db_query($q);
         }
@@ -1891,7 +1891,7 @@ $(document).ready(function() {
 
         // Loop 2
         if (is_array($tagGroups))  {
-            foreach($tagGroups as $entryId => $tagList) {
+            foreach($tagGroups AS $entryId => $tagList) {
                 $eventData[$addData[$entryId]]['properties']['freetag_tags'] = $tagList;
                 $eventData[$addData[$entryId]]['properties']['freetag_tagList'] = implode(",", $tagList);
             }
@@ -2020,7 +2020,7 @@ $(document).ready(function() {
             return $out;
         }
 
-        foreach($tagList as $tag) {
+        foreach($tagList AS $tag) {
             $out .= serendipity_utf8_encode("<$element>" . self::specialchars_mapper($tag) ."</$element>\n");
         }
         return $out;
@@ -2072,7 +2072,7 @@ $(document).ready(function() {
         }
 
         /* Attempt to locate hidden variables within the URI */
-        foreach ($serendipity['uriArguments'] as $k => $v) {
+        foreach ($serendipity['uriArguments'] AS $k => $v) {
             if ($v[0] == 'P') { /* Page */
                 $page = substr($v, 1);
                 if (is_numeric($page)) {
@@ -2306,7 +2306,7 @@ $(document).ready(function() {
             </thead>
             <tbody>
 <?php
-            foreach($taglist as $tag => $weight) {
+            foreach($taglist AS $tag => $weight) {
 ?>
 
                 <tr>
@@ -2352,7 +2352,7 @@ $(document).ready(function() {
     {
         global $serendipity;
 
-        $q = "SELECT e.id as id, e.title as title
+        $q = "SELECT e.id AS id, e.title AS title
                 FROM {$serendipity['dbPrefix']}entries AS e
                 LEFT OUTER JOIN {$serendipity['dbPrefix']}entrytags AS t
                     ON e.id = t.entryid
@@ -2371,7 +2371,7 @@ $(document).ready(function() {
     {
         global $serendipity;
 
-        $q = "SELECT e.id as id, e.title as title, t.tag, count(t.tag) as total
+        $q = "SELECT e.id AS id, e.title AS title, t.tag, count(t.tag) AS total
                 FROM {$serendipity['dbPrefix']}entries AS e
                 LEFT JOIN {$serendipity['dbPrefix']}entrytags AS t
                     ON e.id = t.entryid
@@ -2405,7 +2405,7 @@ $(document).ready(function() {
             if ($serendipity['version'][0] > 1) {
                 echo '<ul class="plainList freetags_list">'."\n";
             }
-            foreach ($r as $row) {
+            foreach ($r AS $row) {
                 if ($serendipity['version'][0] < 2) {
                     echo '<p style="margin: 5px; border: 1px dotted #000; padding: 3px;" class="freetagMenu">
                             <a href="' . FREETAG_EDITENTRY_URL . $row['id'] . '"><img style="border: 0px;" src="' . serendipity_getTemplateFile('admin/img/edit.png') . '"></a>
@@ -2465,7 +2465,7 @@ $(document).ready(function() {
             </thead>
             <tbody>
 <?php
-            foreach($taglist as $tag => $weight) {
+            foreach($taglist AS $tag => $weight) {
 ?>
                 <tr>
                     <td> <?php echo $tag; ?> </td>
@@ -2726,7 +2726,7 @@ $(document).ready(function() {
                 // Perform cleanup
 
                 $entryIDs = array();
-                foreach ($mappings as $mapping) {
+                foreach ($mappings AS $mapping) {
                     if (!in_array($mapping['entryid'], array_values($entryIDs))) {
                         $entryIDs[] = $mapping['entryid'];
                     }
@@ -2753,7 +2753,7 @@ $(document).ready(function() {
             else {
                 // Show inconsistencies
 
-                foreach ($mappings as $mapping) {
+                foreach ($mappings AS $mapping) {
                     $cleanup_tags[$mapping['tag']][] = $mapping['entryid'];
                 }
                 if ($serendipity['version'][0] < 2) {
@@ -2766,7 +2766,7 @@ $(document).ready(function() {
                 echo "<table class='freetags_manage'>\n<thead>\n";
                 echo "    <tr><th>".PLUGIN_EVENT_FREETAG_MANAGE_LIST_TAG."</th><th>".PLUGIN_EVENT_FREETAG_MANAGE_CLEANUP_ENTRIES."</th></tr>\n";
                 echo "</thead><tbody>\n";
-                foreach ($cleanup_tags as $tag => $entries) {
+                foreach ($cleanup_tags AS $tag => $entries) {
                     echo "<tr><td>$tag</td><td>".implode(', ', $entries)."</tr>\n";
                 }
                 echo "</tbody></table>\n";
@@ -2909,7 +2909,7 @@ $(document).ready(function() {
         if (serendipity_db_bool($this->get_config('cat2tag', 'false'))) {
             if (is_array($cats = serendipity_fetchCategories())) {
                 $cats = serendipity_walkRecursive($cats, 'categoryid', 'parentid', VIEWMODE_THREADED);
-                foreach ($cats as $cat) {
+                foreach ($cats AS $cat) {
                     $names = explode(',', $cat['category_name']);
                     foreach($names AS $name) {
                         $name = trim($name);
@@ -2992,7 +2992,7 @@ $(document).ready(function() {
 
         if (serendipity_db_bool($this->get_config('admin_ftayt', 'false'))) {
             $wicktags = array();
-            foreach ($tagsArray as $k => $v) {
+            foreach ($tagsArray AS $k => $v) {
                 $wicktags[] = '\'' . addslashes($k) . '\'';
             }
             echo ($serendipity['version'][0] < 2 ? '<script type="text/javascript" src="' . $serendipity['baseURL'] . 'plugins/serendipity_event_freetag/jquery-1.11.3.min.js"></script>' : '') . '
@@ -3108,7 +3108,7 @@ $(document).ready(function() {
 
         } else {
 ?>
-            <fieldset id="edit_entry_freetags" class="entryproperties_freetag" style="margin: 1em 0;">
+            <fieldset id="edit_entry_freetags" class="entryproperties_freetag">
                 <span class="wrap_legend"><legend><?php echo PLUGIN_EVENT_FREETAG_TITLE; ?></legend></span>
                 <div class="form_field">
                     <label for="properties_freetag_tagList" class="block_level"><?php echo PLUGIN_EVENT_FREETAG_ENTERDESC; ?>:</label>
@@ -3126,7 +3126,7 @@ $(document).ready(function() {
             $index = serendipity_db_bool($this->get_config('admin_delimiter', 'true'));
             $class = $index ? 'class="tagzoom" ' : '';
             $lastletter = '';
-            foreach ($tagsArray as $tag => $count) {
+            foreach ($tagsArray AS $tag => $count) {
                 if (function_exists('mb_strtoupper')) {
                     $upc = mb_strtoupper(mb_substr($tag, 0, 1, LANG_CHARSET), LANG_CHARSET);
                 } else {
@@ -3241,7 +3241,7 @@ $(document).ready(function() {
         $q = "DELETE FROM {$serendipity['dbPrefix']}entrytags WHERE tag = '$tag'";
         serendipity_db_query($q);
 
-        foreach ($r as $row) {
+        foreach ($r AS $row) {
             $q = "INSERT INTO {$serendipity['dbPrefix']}entrytags VALUES ('{$row['entryid']}','$newtag')";
             serendipity_db_query($q);
         }
@@ -3347,8 +3347,8 @@ $(document).ready(function() {
             return false;
         }
 
-        foreach ($entries as $entryid) {
-            foreach ($newtags as $tag) {
+        foreach ($entries AS $entryid) {
+            foreach ($newtags AS $tag) {
                 $q = "INSERT INTO {$serendipity['dbPrefix']}entrytags (entryid, tag)
                         VALUES ('{$entryid['entryid']}', '$tag')";
                 $r = serendipity_db_query($q);
